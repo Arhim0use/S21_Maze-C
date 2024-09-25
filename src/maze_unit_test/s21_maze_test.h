@@ -3,7 +3,7 @@
 
 #include <check.h>
 
-#include "../s21_Maze_Model/maze_model.h"
+#include "../s21_maze_model/maze_model.h"
 
 Suite *suite_create_maze(void);
 Suite *suite_generate_maze(void);

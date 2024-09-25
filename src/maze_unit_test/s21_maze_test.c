@@ -13,11 +13,10 @@ void run_set(Suite *current_set) {
 }
 
 void test_sets(void) {
-  Suite *sets[] = {
-    // suite_create_maze(),
+  Suite *sets[] = {suite_create_maze(),
                    suite_generate_maze(),
-                  //  suite_solve_maze(),
-                  //  suite_parse_maze(),
+                   suite_solve_maze(),
+                   suite_parse_maze(),
                    NULL};
 
   for (Suite **current_set = sets; *current_set != NULL; current_set++) {
