@@ -16,10 +16,10 @@ int s21_create_matrix(int rows, int columns, matrix_t *result) {
   if (rows > 0 && columns > 0) {
     result->columns = columns;
     result->rows = rows;
-    result->matrix = (double **)calloc(rows, sizeof(double *));
+    result->matrix = (unsigned short int **)calloc(rows, sizeof(unsigned short int *));
     if (result->matrix != NULL) {
       for (int i = 0; i < rows; i++)
-        result->matrix[i] = (double *)calloc(columns, sizeof(double));
+        result->matrix[i] = (unsigned short int *)calloc(columns, sizeof(unsigned short int));
       err_code = SUCCESS;
     }
   }
@@ -46,7 +46,7 @@ int s21_eq_matrix(matrix_t *A, matrix_t *B) {
   int result = EQUAL;
   for (int i = 0; i < A->rows; i++) {
     for (int j = 0; j < A->columns; j++) {
-      if (fabs(A->matrix[i][j] - B->matrix[i][j]) >= 1e-7) result = NOT_EQUAL;
+      if (abs(A->matrix[i][j] - B->matrix[i][j]) >= 1e-7) result = NOT_EQUAL;
     }
   }
   return result;
@@ -265,7 +265,7 @@ void print_matrix(matrix_t *mtx) {
       for (int j = 0; j < mtx->columns; j++) {
         // printf("i[%d]j[%d] ", i, j);
         // printf("%10.9lf ", mtx->matrix[i][j]);
-        printf("%2.lf ", mtx->matrix[i][j]);
+        printf("%2d ", mtx->matrix[i][j]);
       }
     }
       printf("\n");
