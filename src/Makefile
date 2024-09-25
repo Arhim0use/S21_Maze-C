@@ -13,7 +13,8 @@ VG_FLAGS     = --vgdb=no --leak-check=full --show-leak-kinds=all --track-origins
 all: clean maze_model
 
 maze_model:
-	$(CC) -Wall -Wextra ./s21_Maze_Model/ch_main.c ./s21_Maze_Model/maze_model.c ./C_Matrix/s21_matrix.c -o ./$(TEST) -lm && ./$(TEST)
+	$(CC) -Wall -Wextra ./ch_main.c ./s21_maze_model/maze_model.c \
+	./s21_maze_generator/maze_generator.c ./C_Matrix/s21_matrix.c -o ./$(TEST) -lm && ./$(TEST)
 
 $(TARGET): $(OBJ)
 	@ $(AR) rcs $@ $^
