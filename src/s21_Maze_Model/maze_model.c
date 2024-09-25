@@ -1,4 +1,5 @@
 #include "maze_model.h"
+#include "maze_model_helper.h"
 
 /// @brief Init empty maze struct
 rectangular_maze null_maze() {
@@ -32,7 +33,8 @@ maze_errors create_maze(int rows, int cols, rectangular_maze *A) {
             A->rows = 0;
             A->cols = 0;
         } else {
-            next_num_set(A);
+            first_num_set(A);
+            init_matrix(A);
             err_code = OK;
         }
     }
@@ -67,12 +69,26 @@ maze_errors init_random_matrix(rectangular_maze *A) {
     return OK;
 }
 
-maze_errors next_num_set(rectangular_maze *A) {
+maze_errors init_matrix(rectangular_maze *A) {
+    if (!is_created_maze(A)) {
+        return ERROR;
+    }
+
+    for (int i = 0; i < A->rows; i++) {
+        for (int j = 0; j < A->cols; j++) {
+            A->right_walls.matrix[i][j] = 1.;
+            A->lower_walls.matrix[i][j] = 1.;
+        }
+    }
+
+    return OK;
+}
+
+maze_errors first_num_set(rectangular_maze *A) {
     if (!is_created_maze(A)) { return ERROR; }
 
-    int num = A->num_set[A->cols - 1];
     for (int i = 0; i < A->cols; i++) {
-        A->num_set[i] = ++num;
+        A->num_set[i] = i;
     }
 
     return OK;
