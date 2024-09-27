@@ -16,12 +16,22 @@ rectangular_maze null_maze() {
     return maze;
 }
 
+maze_errors is_valid_size(int rows, int cols) {
+    if (rows > const_settings.max_rows || cols > const_settings.max_cols 
+        || rows < const_settings.min_rows || cols < const_settings.min_cols) { 
+        return ERROR_SIZE; 
+    }
+    return OK;
+}
+
 /// @brief min maze size 2x2 else return enum maze_errors ERROR
 /// @return  enum maze_errors ERROR if invalid size or cant calloc memory and OK if always good
 maze_errors create_maze(int rows, int cols, rectangular_maze *A) {
-    if (rows < 2 || cols < 2) { return ERROR; }
+    if (!A) { return ERROR; }
 
-    maze_errors err_code = ERROR;
+    maze_errors err_code = is_valid_size(rows, cols);
+    if (err_code == ERROR_SIZE) { return err_code; }
+
     A->rows = rows;
     A->cols = cols;
 
@@ -112,7 +122,7 @@ void print_maze(rectangular_maze *A) {
     } 
     printf("%d %d\n", A->rows, A->cols);
     for (int i = 0; i < A->rows; i++) {
-        for (int j = 0; j < A->rows; j++) {
+        for (int j = 0; j < A->cols; j++) {
             char lower_wall = A->lower_walls.matrix[i][j] ? '_' : ' ';
             char right_wall = A->right_walls.matrix[i][j] ? '|' : ' ';
             printf("%c%c", lower_wall, right_wall);
