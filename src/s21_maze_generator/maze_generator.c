@@ -9,9 +9,9 @@ void print_num_set(rectangular_maze *A) {
 }
 
 maze_errors generate_ideal_maze(int rows, int cols, rectangular_maze *maze) {
-    if (rows > 50 || cols > 50 || rows < 0 || cols < 0) { return ERROR; }
-
-    maze_errors err_code = OK;
+    
+    maze_errors err_code = is_valid_size(rows, cols);
+    if (err_code == ERROR) { return ERROR; }
 
     if (is_created_maze(maze)) {
         if (maze->cols != cols || maze->rows != rows) {
@@ -23,8 +23,7 @@ maze_errors generate_ideal_maze(int rows, int cols, rectangular_maze *maze) {
     }
 
     if (err_code == OK) {
-        init_matrix(maze);
-        first_num_set(maze);
+        reset_matrix(maze, rows, cols);
         generate_maze(maze);
     } 
 
@@ -113,6 +112,13 @@ int is_have_vertical_door(rectangular_maze *A, int row, int pos) {
     }
 
     return is_door;
+}
+
+void reset_matrix(rectangular_maze *maze, int rows, int cols) {
+    maze->rows = rows;
+    maze->cols = cols;
+    init_matrix(maze);
+    first_num_set(maze);
 }
 
 int randomBool() { 
